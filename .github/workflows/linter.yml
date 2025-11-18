@@ -1,8 +1,8 @@
 name: Unity C# Linter
 
 on:
-  push: # Trigger on every push
-  pull_request: # Also run on pull requests
+  push:  # Trigger on every push
+  pull_request:  # Also run on pull requests
 
 jobs:
   lint:
@@ -21,28 +21,6 @@ jobs:
       - name: Install dotnet-format
         run: dotnet tool install -g dotnet-format
 
-
-      - name: Run dotnet-format (ShvuitA + ShvuitB)
-        shell: bash
-        run: |
-          fail=0
-
-          run_format () {
-            local dir="$1"
-            if [ -d "$dir" ]; then
-              echo "Running dotnet-format in '$dir'..."
-              if ! dotnet-format --check --folder "$dir" --verbosity minimal --include "**/*.cs"; then
-                echo "Formatting issues found in: $dir"
-                fail=1
-              else
-                echo "No issues in: $dir"
-              fi
-            else
-              echo "Skipping: '$dir' not found"
-            fi
-          }
-
-          run_format "ShvuitA/Assets/Scripts"
-          run_format "ShvuitB/Assets/Scripts"
-
-          exit $fail
+      - name: Run dotnet-format
+        # Run dotnet-format in check mode to identify issues only in .cs files in Assets/Scripts and subfolders
+        run: dotnet-format Assets/Scripts --check --folder --include **/*.cs --verbosity diagnostic
