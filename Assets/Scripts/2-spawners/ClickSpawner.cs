@@ -6,13 +6,13 @@ using UnityEngine.InputSystem;
  */
 public class ClickSpawner : MonoBehaviour
 {
-    [SerializeField] 
+    [SerializeField]
     protected InputAction spawnAction = new InputAction(type: InputActionType.Button);
 
-    [SerializeField] 
+    [SerializeField]
     protected GameObject prefabToSpawn;
 
-    [SerializeField] 
+    [SerializeField]
     protected Vector3 velocityOfSpawnedObject;
 
     private void OnEnable()
@@ -25,7 +25,7 @@ public class ClickSpawner : MonoBehaviour
         spawnAction.Disable();
     }
 
-    protected virtual GameObject spawnObject()
+    protected virtual GameObject SpawnObject()
     {
         Debug.Log("Spawning a new " + prefabToSpawn.name);
 
@@ -49,7 +49,8 @@ public class ClickSpawner : MonoBehaviour
     {
         if (spawnAction.WasPressedThisFrame())
         {
-            spawnObject();
+            SpawnObject();
         }
     }
 }
+
